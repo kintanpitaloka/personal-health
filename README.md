@@ -21,7 +21,7 @@ This is **not** a toy BMI calculator. It tracks longitudinal health data over ti
 ## 📂 Project Structure
 
 ```
-personal-health-dashboard/
+personal-health/
 │
 ├── app.py                     # Main Streamlit app (UI + routing)
 ├── generate_sample_data.py    # One-off script to regenerate sample dataset
@@ -62,52 +62,6 @@ personal-health-dashboard/
 
 ---
 
-## 🚀 Run Locally
-
-**1. Clone / download the project, then navigate into it:**
-```bash
-cd personal-health-dashboard
-```
-
-**2. (Recommended) Create a virtual environment:**
-```bash
-python3 -m venv venv
-source venv/bin/activate      # macOS/Linux
-venv\Scripts\activate         # Windows
-```
-
-**3. Install dependencies:**
-```bash
-pip install -r requirements.txt
-```
-
-**4. Run the app:**
-```bash
-streamlit run app.py
-```
-
-The app will open automatically at `http://localhost:8501`. A sample dataset (60 days of simulated data) is already included in `data/health_data.csv` so the dashboard is populated on first launch. Delete that file (or its contents) if you want to start tracking your own data from scratch — `storage.py` will regenerate it gracefully.
-
-**Regenerate the sample dataset** (optional):
-```bash
-python3 generate_sample_data.py
-```
-
----
-
-## ☁️ Deploy to Streamlit Community Cloud
-
-1. Push this project to a **public GitHub repository** (Streamlit Cloud's free tier requires the repo to be public, or you need a paid plan for private repos).
-2. Go to [share.streamlit.io](https://share.streamlit.io) and sign in with GitHub.
-3. Click **"New app"**, select your repository, branch (`main`), and set the main file path to `app.py`.
-4. Click **"Deploy"**. Streamlit Cloud will install everything from `requirements.txt` automatically.
-
-**Important production notes:**
-- **CSV persistence is ephemeral on Streamlit Cloud.** The filesystem resets on redeploys/restarts, so any data written via the app during a session may not survive a full app restart. This is fine for demo/portfolio purposes but for a real multi-session deployment, swap `utils/storage.py` for a proper database (Postgres, SQLite with a persistent volume, or a hosted service like Supabase) — the rest of the codebase (`calculations.py`, `forecasting.py`, `charts.py`, `app.py`) requires **no changes**, since `storage.py` is the only I/O boundary.
-- If you want multi-user support, you'll need to add authentication (e.g. `streamlit-authenticator`) and scope each user's data by a user ID column — currently this app is single-user by design (a personal tracker).
-
----
-
 ## 🛠️ Tech Stack
 
 | Layer | Tool |
@@ -125,12 +79,6 @@ python3 generate_sample_data.py
 - Single-user, no authentication — this is a personal tracker, not a multi-tenant SaaS
 - Forecast is a **linear** trend — doesn't account for plateaus, seasonal effects, or non-linear weight loss curves (a real production version might explore polynomial regression or Prophet if the data volume justified it)
 - CSV storage is not concurrency-safe — fine for a single local user, not for concurrent multi-writer access
-
----
-
-## 📄 License
-
-Free to use for personal or portfolio purposes.
 
 ---
 
