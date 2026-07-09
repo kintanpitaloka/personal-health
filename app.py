@@ -18,7 +18,7 @@ from utils import storage, calculations, forecasting, charts
 # Page config — must be the first Streamlit call
 # ----------------------------------------------------------------------
 st.set_page_config(
-    page_title="Personal Health Analytics",
+    page_title="Personal Health Dashboard",
     page_icon="🩺",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -29,79 +29,61 @@ st.set_page_config(
 # ----------------------------------------------------------------------
 st.markdown("""
 <style>
+    .main { background-color: #FAFAFA; }
+    #MainMenu, footer { visibility: hidden; }
 
-/* Hide Streamlit branding */
-#MainMenu, footer {
-    visibility: hidden;
-}
+    .metric-card {
+        background: white;
+        border-radius: 16px;
+        padding: 1.25rem 1.5rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+        border: 1px solid #F0F0F0;
+    }
+    .metric-label {
+        font-size: 0.8rem;
+        color: #6B7280;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        margin-bottom: 0.25rem;
+    }
+    .metric-value {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #111827;
+    }
+    .metric-delta-pos { color: #EF4444; font-size: 0.85rem; font-weight: 600; }
+    .metric-delta-neg { color: #10B981; font-size: 0.85rem; font-weight: 600; }
+    .metric-delta-neutral { color: #6B7280; font-size: 0.85rem; font-weight: 600; }
 
-/* Main App */
-.main {
-    background: linear-gradient(
-                135deg,
-                #0F172A 0%,
-                #1E1B4B 40%,
-                #66001F 100%
-                );
-}
-
-/* Card */
-.metric-card {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(14px);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 20px;
-    padding: 1.25rem;
-}
-
-/* Typography */
-.metric-label {
-    color: #94A3B8;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.metric-value {
-    color: #F8FAFC;
-    font-size: 2rem;
-    font-weight: 700;
-}
-
-.section-title {
-    color: #F8FAFC;
-    font-size: 1.2rem;
-    font-weight: 700;
-}
-
-.app-header {
-    color: #FFFFFF;
-    font-size: 2.4rem;
-    font-weight: 800;
-}
-
-.app-subheader {
-    color: #94A3B8;
-    font-size: 1rem;
-}
-
-/* Sidebar */
-section[data-testid="stSidebar"] {
-    background: #0F172A;
-}
-
-/* Tabs */
-button[data-baseweb="tab"] {
-    font-weight: 600;
-}
-
-/* Dataframe */
-[data-testid="stDataFrame"] {
-    border-radius: 16px;
-    overflow: hidden;
-}
-
+    .section-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #111827;
+        margin: 1.5rem 0 0.75rem 0;
+    }
+    .app-header {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #111827;
+        margin-bottom: 0.1rem;
+    }
+    .app-subheader {
+        color: #6B7280;
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+    .badge {
+        display: inline-block;
+        padding: 0.2rem 0.7rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    .badge-normal { background: #D1FAE5; color: #065F46; }
+    .badge-under { background: #DBEAFE; color: #1E40AF; }
+    .badge-over { background: #FEF3C7; color: #92400E; }
+    .badge-obese { background: #FEE2E2; color: #991B1B; }
 </style>
 """, unsafe_allow_html=True)
 
